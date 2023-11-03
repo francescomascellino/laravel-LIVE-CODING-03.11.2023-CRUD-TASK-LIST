@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\TasksController;
+use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    $tasks = Task::orderByDesc('id')->get();
+    return view('index', compact('tasks'));
+})->name('index');
+
+Route::resource('admin/tasks', TasksController::class);
